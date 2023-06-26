@@ -1,0 +1,16 @@
+Package: CEL
+Title: Helpers For Good Practices In Data Preparation
+Version: 0.0.0.9000
+Authors@R: 
+    person("Charles-Étienne", "Lavoie", , "lavoie.charles-etienne@courrier.uqam.ca", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0001-7865-3816"))
+Description: This package is meant to facilitate the process of preparing data for analysis.
+License: MIT + file LICENSE
+Imports: 
+    lavaan,
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
