@@ -18,7 +18,8 @@ The goal of CEL is to …
 You can install the development version of CEL like so:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+# If package `remotes` isn't already installed, install it with `install.packages("remotes")`
+remotes::install_github("CharlesEtienneLavoie/CEL")
 ```
 
 ## Example

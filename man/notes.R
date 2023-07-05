@@ -6,3 +6,9 @@
 # ctrl + shift + K = knit
 # ctrl + shift + T = run tests
 # ctrl + shift + E = run different checks
+
+#install.packages("usethis")
+library(usethis)
+
+usethis::use_github()
+
