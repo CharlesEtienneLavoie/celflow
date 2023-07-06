@@ -1,37 +1,46 @@
-#' @title Compute Power Analysis For SEM Model Using Monte Carlo Simulation
+#' @title Clean Attention Check Failures in a Dataset
 #'
-#' @description Compute Power Analysis For SEM Model Using Monte Carlo
-#' Simulation
+#' @description The `clean_attention` function identifies and removes responses
+#' from participants who failed attention checks in a survey dataset. It operates
+#' by comparing participant responses to a set of correct answers. It can be
+#' configured to treat missing responses as incorrect. The function calculates
+#' the total number of correct responses per participant and removes participants
+#' who do not reach a specified minimum number of correct answers.
 #'
-#' @details The function uses the simulate_data function from the lavaan
-#' package to perform a monte carlo simulation. The mean, std error, z value,
-#' p value and confidence intervals are then computed and reported in a table
-#' for each parameter.
+#' @param data A dataset where attention check failures need to be identified and removed.
+#' @param questions A vector of column names in the dataset that represent the questions
+#' used for attention checks.
+#' @param correct_answers A vector of the correct answers to the attention check
+#' questions. Must be the same length as the `questions` vector.
+#' @param min_correct The minimum number of correct answers a participant must
+#' have to be retained in the dataset (default is 1).
+#' @param set_missing_to_zero A logical value to decide if missing responses should
+#' be treated as incorrect (default is FALSE).
 #'
-#' @param model.population The lavaan model with population estimate values
-#' specified.
-#' @param model The lavaan model that will be tested in each simulation
-#' @param ksim  How many simulations the function should perform
-#' @param nobs  How many observations to generate in each simulation
-
-#' @return A table.
-#' @references Remember to add reference here
+#' @return A dataset where responses from participants who failed the attention
+#' checks have been removed.
+#' @references Remember to add reference here.
 #' @export
 #' @examples
-#' library(lavaan)
-#' modpop <- '
-#' M ~ 0.40*X
-#' Y ~ 0.30*M
-#' '
-#' mod <- '
-#' M ~ X
-#' Y ~ M
-#' '
+#' \dontrun{
+#' # Generate some data
+#' df <- data.frame(
+#'   q1 = c(1, 2, 3, 2, 2, 1, 3, 2, 1, 2),
+#'   q2 = c(2, 2, 3, 1, 2, 3, 2, 3, 1, 2),
+#'   q3 = c(3, 2, 1, 2, 2, 3, 1, 3, 2, 1)
+#' )
 #'
-#' simulate_power(modpop, mod)
+#' # Specify the correct answers
+#' correct_answers <- c(2, 3, 1)
+#'
+#' # Clean the data
+#' clean_data <- clean_attention(df, questions = c("q1", "q2", "q3"),
+#' correct_answers = correct_answers, min_correct = 2, set_missing_to_zero = TRUE)
+#' }
 
 
-create_correct_answer_total <- function(data, questions, correct_answers, min_correct = 1, set_missing_to_zero = FALSE) {
+
+clean_attention <- function(data, questions, correct_answers, min_correct = 1, set_missing_to_zero = FALSE) {
   # Check that the correct answers vector has the same length as the questions vector
   if (length(questions) != length(correct_answers)) {
     stop("The length of the questions vector and the correct answers vector must be the same.")

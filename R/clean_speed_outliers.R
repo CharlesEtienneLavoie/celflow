@@ -1,34 +1,32 @@
-#' @title Compute Power Analysis For SEM Model Using Monte Carlo Simulation
+#' @title Clean Speed Outliers in a Dataset
 #'
-#' @description Compute Power Analysis For SEM Model Using Monte Carlo
-#' Simulation
+#' @description The `clean_speed_outliers` function identifies and removes
+#' speed outliers from a given dataset based on the Median Absolute Deviation
+#' (MAD). The function can identify both "fast" and "slow" outliers, depending
+#' on the parameter settings. It prints the number of identified outliers,
+#' initial number of observations, final number of observations after
+#' removing outliers, and the number of observations removed.
 #'
-#' @details The function uses the simulate_data function from the lavaan
-#' package to perform a monte carlo simulation. The mean, std error, z value,
-#' p value and confidence intervals are then computed and reported in a table
-#' for each parameter.
+#' @param data A dataset where speed outliers need to be identified and removed.
+#' @param duration_var The variable in the dataset used to identify outliers.
+#' @param remove_slow A logical value to decide if slow outliers should be
+#' removed (default is FALSE).
 #'
-#' @param model.population The lavaan model with population estimate values
-#' specified.
-#' @param model The lavaan model that will be tested in each simulation
-#' @param ksim  How many simulations the function should perform
-#' @param nobs  How many observations to generate in each simulation
-
-#' @return A table.
-#' @references Remember to add reference here
+#' @return A dataset where speed outliers have been removed.
+#' @references Remember to add reference here.
 #' @export
 #' @examples
-#' library(lavaan)
-#' modpop <- '
-#' M ~ 0.40*X
-#' Y ~ 0.30*M
-#' '
-#' mod <- '
-#' M ~ X
-#' Y ~ M
-#' '
+#' \dontrun{
+#' # Generate some data
+#' df <- data.frame(
+#'   duration = c(1, 2, 3, 4, 5, 6, 1000, 2000, 50000, -50, -200),
+#'   other_var = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
+#' )
 #'
-#' simulate_power(modpop, mod)
+#' # Remove speed outliers from the data
+#' clean_data <- clean_speed_outliers(df, duration_var = "duration", remove_slow = TRUE)
+#' }
+
 
 
 clean_speed_outliers <- function(data, duration_var, remove_slow = FALSE) {

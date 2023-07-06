@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean_data.R
 \name{clean_data}
 \alias{clean_data}
-\title{Compute Power Analysis For SEM Model Using Monte Carlo Simulation}
+\title{Clean and Filter Research Data}
 \usage{
 clean_data(
   data,
@@ -16,41 +16,56 @@ clean_data(
 )
 }
 \arguments{
-\item{model.population}{The lavaan model with population estimate values
-specified.}
+\item{data}{A dataframe containing the data to be cleaned.}
 
-\item{model}{The lavaan model that will be tested in each simulation}
+\item{apply_channel_filter}{Logical, whether to apply channel filtering. Default is TRUE.}
 
-\item{ksim}{How many simulations the function should perform}
+\item{channel_keep}{A string specifying the channel to keep. Default is "anonymous".}
 
-\item{nobs}{How many observations to generate in each simulation}
+\item{apply_progress_filter}{Logical, whether to apply progress filtering. Default is TRUE.}
+
+\item{progress_threshold}{A numeric value indicating the progress threshold. Default is 60.}
+
+\item{apply_date_filter}{Logical, whether to apply date filtering. Default is TRUE.}
+
+\item{date_variable}{A string specifying the name of the date variable in the dataframe. Default is "StartDate".}
+
+\item{date_filter}{A list specifying the date (year, month, day) for filtering. Default is the current date.}
 }
 \value{
-A table.
+A cleaned dataframe.
 }
 \description{
-Compute Power Analysis For SEM Model Using Monte Carlo
-Simulation
+The \code{clean_data} function is designed to streamline the
+data cleaning process for psychology research. It allows for the filtering
+of data based on a specified date range, progress threshold, and channel.
 }
 \details{
-The function uses the simulate_data function from the lavaan
-package to perform a monte carlo simulation. The mean, std error, z value,
-p value and confidence intervals are then computed and reported in a table
-for each parameter.
+This function filters data based on three optional conditions:
+\enumerate{
+\item Filter out all rows that do not match a specified distribution channel
+(\code{channel_keep}).
+\item Filter out all rows that do not meet a certain progress threshold
+(\code{progress_threshold}).
+\item Filter out all rows that are before a specified date (\code{date_filter}).
+}
+
+The function then checks for the existence of the specified date variable
+(\code{date_variable}) and that it can be parsed into a date. If the check fails,
+an error is thrown.
 }
 \examples{
-library(lavaan)
-modpop <- '
-M ~ 0.40*X
-Y ~ 0.30*M
-'
-mod <- '
-M ~ X
-Y ~ M
-'
-
-simulate_power(modpop, mod)
+\dontrun{
+cleaned_data <- clean_data(mydata,
+                           apply_channel_filter = TRUE,
+                           channel_keep = "anonymous",
+                           apply_progress_filter = TRUE,
+                           progress_threshold = 75,
+                           apply_date_filter = TRUE,
+                           date_variable = "StartDate",
+                           date_filter = list(year = 2023, month = 7, day = 1))
+}
 }
 \references{
-Remember to add reference here
+Add any relevant references here.
 }

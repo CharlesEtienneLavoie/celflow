@@ -2,46 +2,26 @@
 % Please edit documentation in R/install_and_load_packages.R
 \name{install_and_load_packages}
 \alias{install_and_load_packages}
-\title{Compute Power Analysis For SEM Model Using Monte Carlo Simulation}
+\title{Install and Load R Packages}
 \usage{
 install_and_load_packages(packages)
 }
 \arguments{
-\item{model.population}{The lavaan model with population estimate values
-specified.}
-
-\item{model}{The lavaan model that will be tested in each simulation}
-
-\item{ksim}{How many simulations the function should perform}
-
-\item{nobs}{How many observations to generate in each simulation}
+\item{packages}{A character vector of package names to be installed and loaded.}
 }
 \value{
-A table.
+No return value. Called for side effects.
 }
 \description{
-Compute Power Analysis For SEM Model Using Monte Carlo
-Simulation
-}
-\details{
-The function uses the simulate_data function from the lavaan
-package to perform a monte carlo simulation. The mean, std error, z value,
-p value and confidence intervals are then computed and reported in a table
-for each parameter.
+This function installs and loads R packages. It checks if the specified packages
+are already installed. If a package is not installed, it is downloaded from CRAN,
+installed, and then loaded into the R environment.
 }
 \examples{
-library(lavaan)
-modpop <- '
-M ~ 0.40*X
-Y ~ 0.30*M
-'
-mod <- '
-M ~ X
-Y ~ M
-'
-
-simulate_power(modpop, mod)
+\dontrun{
+install_and_load_packages(c("ggplot2", "dplyr"))
+}
 }
 \references{
-Remember to add reference here
+Remember to add reference here.
 }

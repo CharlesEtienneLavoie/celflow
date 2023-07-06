@@ -1,34 +1,40 @@
-#' @title Compute Power Analysis For SEM Model Using Monte Carlo Simulation
+#' @title Clean Dataset Based on Missing Data Threshold and MCAR Test
 #'
-#' @description Compute Power Analysis For SEM Model Using Monte Carlo
-#' Simulation
+#' @description `clean_na_data` function is designed to handle missing data
+#' in a given dataset by excluding variables and observations based on the
+#' provided parameters. It provides a flexible and comprehensive approach to
+#' handling missing data by allowing to exclude variables based on patterns
+#' in their names and filter observations that have a percentage of missing
+#' data above a specified threshold. Additionally, it can perform a MCAR (Missing
+#' Completely At Random) test if requested.
 #'
-#' @details The function uses the simulate_data function from the lavaan
-#' package to perform a monte carlo simulation. The mean, std error, z value,
-#' p value and confidence intervals are then computed and reported in a table
-#' for each parameter.
+#' @param data The dataset to be cleaned.
+#' @param scenario_based_vars Character vector with base names or full names
+#' of variables to exclude from the dataset. Can also be a numeric vector with
+#' column indices to be removed.
+#' @param missing_threshold Percentage threshold for missing data per observation
+#' (defaults to 60 percent).
+#' @param full_names Logical value indicating whether `scenario_based_vars`
+#' are full names of the variables (default is FALSE).
+#' @param MCAR Logical value indicating whether to perform a MCAR test
+#' (defaults to FALSE).
+#' @param main_vars Character vector with base names of variables to include
+#' in the MCAR test. If NULL, all variables are included (default is NULL).
 #'
-#' @param model.population The lavaan model with population estimate values
-#' specified.
-#' @param model The lavaan model that will be tested in each simulation
-#' @param ksim  How many simulations the function should perform
-#' @param nobs  How many observations to generate in each simulation
-
-#' @return A table.
-#' @references Remember to add reference here
+#' @return A dataset with cleaned missing data.
+#' @references Remember to add reference here.
 #' @export
 #' @examples
-#' library(lavaan)
-#' modpop <- '
-#' M ~ 0.40*X
-#' Y ~ 0.30*M
-#' '
-#' mod <- '
-#' M ~ X
-#' Y ~ M
-#' '
+#' \dontrun{
+#' # Generate some objects
+#' df <- data.frame(a = c(1, 2, NA, 4, 5),
+#'                  b = c("one", "two", "three", NA, "five"),
+#'                  c = c(NA, NA, 3, 4, 5))
 #'
-#' simulate_power(modpop, mod)
+#' # Clean the environment but keep lists and the object named 'a'
+#' clean_na_data(df, missing_threshold = 50, MCAR = TRUE)
+#' }
+
 
 
 clean_na_data <- function(data, scenario_based_vars = NULL, missing_threshold = 60, full_names = FALSE, MCAR = FALSE, main_vars = NULL) {
@@ -57,11 +63,12 @@ clean_na_data <- function(data, scenario_based_vars = NULL, missing_threshold = 
   missing <- is.na(data)
   Missing_count <- rowSums(missing)
   # Add missing count in the main dataset
+  data_original$Missing_count <- Missing_count
   data$Missing_count <- Missing_count
   # Filter responses with more than 'missing_threshold' percent missing data
   data_filtered <- data %>% filter(Missing_count < ncol(data) * missing_threshold / 100)
   # Apply same filter to original data
-  data_original <- data_original[row.names(data_original) %in% row.names(data_filtered), ]
+  data_original <- data_original %>% filter(Missing_count < ncol(data) * missing_threshold / 100)
   # Print initial and filtered number of observations
   cat("Initial number of observations (before cleaning): ", nrow(data), "\n")
   cat("Number of observations after filtering for missing data: ", nrow(data_original), "\n")
@@ -93,6 +100,5 @@ clean_na_data <- function(data, scenario_based_vars = NULL, missing_threshold = 
 
   return(data_original)
 }
-
 
 

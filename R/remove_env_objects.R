@@ -1,34 +1,26 @@
-#' @title Compute Power Analysis For SEM Model Using Monte Carlo Simulation
+#' @title Remove Specific Objects from Global Environment
 #'
-#' @description Compute Power Analysis For SEM Model Using Monte Carlo
-#' Simulation
+#' @description This function removes specified objects from the global
+#' environment in R.
 #'
-#' @details The function uses the simulate_data function from the lavaan
-#' package to perform a monte carlo simulation. The mean, std error, z value,
-#' p value and confidence intervals are then computed and reported in a table
-#' for each parameter.
+#' @param remove_objects A character vector specifying the names of objects to
+#' be removed. If NULL (default), no objects are removed.
 #'
-#' @param model.population The lavaan model with population estimate values
-#' specified.
-#' @param model The lavaan model that will be tested in each simulation
-#' @param ksim  How many simulations the function should perform
-#' @param nobs  How many observations to generate in each simulation
-
-#' @return A table.
+#' @return This function does not return anything. It removes the specified
+#' objects from the global environment.
 #' @references Remember to add reference here
 #' @export
 #' @examples
-#' library(lavaan)
-#' modpop <- '
-#' M ~ 0.40*X
-#' Y ~ 0.30*M
-#' '
-#' mod <- '
-#' M ~ X
-#' Y ~ M
-#' '
+#' \dontrun{
+#' # create some objects
+#' x <- 1:10
+#' y <- letters
+#' z <- rnorm(100)
 #'
-#' simulate_power(modpop, mod)
+#' # remove 'x' and 'y'
+#' remove_env_objects(c("x", "y"))
+#' }
+
 
 
 remove_env_objects <- function(remove_objects = NULL) {

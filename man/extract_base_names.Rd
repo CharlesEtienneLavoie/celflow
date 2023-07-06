@@ -2,50 +2,46 @@
 % Please edit documentation in R/extract_base_names.R
 \name{extract_base_names}
 \alias{extract_base_names}
-\title{Compute Power Analysis For SEM Model Using Monte Carlo Simulation}
+\title{Extract Base Names from Dataset Variable Names}
 \usage{
 extract_base_names(
   dataset,
   underscore_count = 1,
   keep_qualtrics_vars = FALSE,
-  other_vars_removal = NULL
+  other_vars_removal = NULL,
+  use_numbers = FALSE
 )
 }
 \arguments{
-\item{model.population}{The lavaan model with population estimate values
-specified.}
+\item{dataset}{The dataset from which variable names are extracted.}
 
-\item{model}{The lavaan model that will be tested in each simulation}
+\item{underscore_count}{The number of underscores to consider when extracting base names (default is 1).}
 
-\item{ksim}{How many simulations the function should perform}
+\item{keep_qualtrics_vars}{Logical value indicating whether to keep Qualtrics variables (default is \code{FALSE}).}
 
-\item{nobs}{How many observations to generate in each simulation}
+\item{other_vars_removal}{A character vector specifying additional variables to exclude from the extraction process (default is \code{NULL}).}
+
+\item{use_numbers}{Logical value indicating whether to append numbers to base names (default is \code{FALSE}).}
 }
 \value{
-A table.
+A character vector containing the unique base names extracted from the dataset variable names.
 }
 \description{
-Compute Power Analysis For SEM Model Using Monte Carlo
-Simulation
+This function extracts the base names from variable names in a dataset.
 }
 \details{
-The function uses the simulate_data function from the lavaan
-package to perform a monte carlo simulation. The mean, std error, z value,
-p value and confidence intervals are then computed and reported in a table
-for each parameter.
+The function takes a dataset as input and extracts the base names from the variable names. It allows for flexibility in handling variable names with underscores by specifying the number of underscores to consider. By default, the function removes Qualtrics variables commonly found in survey data, but this behavior can be modified with the \code{keep_qualtrics_vars} argument. Additional variables specified by the user can also be excluded. The function can also append numbers to base names if \code{use_numbers} is set to \code{TRUE}.
 }
 \examples{
-library(lavaan)
-modpop <- '
-M ~ 0.40*X
-Y ~ 0.30*M
-'
-mod <- '
-M ~ X
-Y ~ M
-'
+dataset <- data.frame(Age_1 = c(25, 30, 35),
+Gender_1 = c("Male", "Female", "Male"),
+Income_1 = c(50000, 60000, 70000),
+Age_2 = c(40, 45, 50),
+Gender_2 = c("Female", "Male", "Female"),
+Income_2 = c(80000, 90000, 100000))
 
-simulate_power(modpop, mod)
+extract_base_names(dataset, underscore_count = 1)
+
 }
 \references{
 Remember to add reference here

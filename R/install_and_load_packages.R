@@ -1,34 +1,19 @@
-#' @title Compute Power Analysis For SEM Model Using Monte Carlo Simulation
+#' @title Install and Load R Packages
 #'
-#' @description Compute Power Analysis For SEM Model Using Monte Carlo
-#' Simulation
+#' @description This function installs and loads R packages. It checks if the specified packages
+#' are already installed. If a package is not installed, it is downloaded from CRAN,
+#' installed, and then loaded into the R environment.
 #'
-#' @details The function uses the simulate_data function from the lavaan
-#' package to perform a monte carlo simulation. The mean, std error, z value,
-#' p value and confidence intervals are then computed and reported in a table
-#' for each parameter.
+#' @param packages A character vector of package names to be installed and loaded.
 #'
-#' @param model.population The lavaan model with population estimate values
-#' specified.
-#' @param model The lavaan model that will be tested in each simulation
-#' @param ksim  How many simulations the function should perform
-#' @param nobs  How many observations to generate in each simulation
-
-#' @return A table.
-#' @references Remember to add reference here
+#' @return No return value. Called for side effects.
+#' @references Remember to add reference here.
 #' @export
 #' @examples
-#' library(lavaan)
-#' modpop <- '
-#' M ~ 0.40*X
-#' Y ~ 0.30*M
-#' '
-#' mod <- '
-#' M ~ X
-#' Y ~ M
-#' '
-#'
-#' simulate_power(modpop, mod)
+#' \dontrun{
+#' install_and_load_packages(c("ggplot2", "dplyr"))
+#' }
+
 
 
 install_and_load_packages <- function(packages) {

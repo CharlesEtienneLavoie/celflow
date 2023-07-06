@@ -1,34 +1,44 @@
-#' @title Compute Power Analysis For SEM Model Using Monte Carlo Simulation
+#' @title Clean and Filter Research Data
 #'
-#' @description Compute Power Analysis For SEM Model Using Monte Carlo
-#' Simulation
+#' @description The `clean_data` function is designed to streamline the
+#' data cleaning process for psychology research. It allows for the filtering
+#' of data based on a specified date range, progress threshold, and channel.
 #'
-#' @details The function uses the simulate_data function from the lavaan
-#' package to perform a monte carlo simulation. The mean, std error, z value,
-#' p value and confidence intervals are then computed and reported in a table
-#' for each parameter.
+#' @details This function filters data based on three optional conditions:
+#' 1. Filter out all rows that do not match a specified distribution channel
+#' (`channel_keep`).
+#' 2. Filter out all rows that do not meet a certain progress threshold
+#' (`progress_threshold`).
+#' 3. Filter out all rows that are before a specified date (`date_filter`).
 #'
-#' @param model.population The lavaan model with population estimate values
-#' specified.
-#' @param model The lavaan model that will be tested in each simulation
-#' @param ksim  How many simulations the function should perform
-#' @param nobs  How many observations to generate in each simulation
-
-#' @return A table.
-#' @references Remember to add reference here
+#' The function then checks for the existence of the specified date variable
+#' (`date_variable`) and that it can be parsed into a date. If the check fails,
+#' an error is thrown.
+#'
+#' @param data A dataframe containing the data to be cleaned.
+#' @param apply_channel_filter Logical, whether to apply channel filtering. Default is TRUE.
+#' @param channel_keep A string specifying the channel to keep. Default is "anonymous".
+#' @param apply_progress_filter Logical, whether to apply progress filtering. Default is TRUE.
+#' @param progress_threshold A numeric value indicating the progress threshold. Default is 60.
+#' @param apply_date_filter Logical, whether to apply date filtering. Default is TRUE.
+#' @param date_variable A string specifying the name of the date variable in the dataframe. Default is "StartDate".
+#' @param date_filter A list specifying the date (year, month, day) for filtering. Default is the current date.
+#'
+#' @return A cleaned dataframe.
+#' @references Add any relevant references here.
 #' @export
 #' @examples
-#' library(lavaan)
-#' modpop <- '
-#' M ~ 0.40*X
-#' Y ~ 0.30*M
-#' '
-#' mod <- '
-#' M ~ X
-#' Y ~ M
-#' '
-#'
-#' simulate_power(modpop, mod)
+#' \dontrun{
+#' cleaned_data <- clean_data(mydata,
+#'                            apply_channel_filter = TRUE,
+#'                            channel_keep = "anonymous",
+#'                            apply_progress_filter = TRUE,
+#'                            progress_threshold = 75,
+#'                            apply_date_filter = TRUE,
+#'                            date_variable = "StartDate",
+#'                            date_filter = list(year = 2023, month = 7, day = 1))
+#' }
+
 
 
 clean_data <- function(data,

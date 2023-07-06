@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean_na_data.R
 \name{clean_na_data}
 \alias{clean_na_data}
-\title{Compute Power Analysis For SEM Model Using Monte Carlo Simulation}
+\title{Clean Dataset Based on Missing Data Threshold and MCAR Test}
 \usage{
 clean_na_data(
   data,
@@ -14,41 +14,47 @@ clean_na_data(
 )
 }
 \arguments{
-\item{model.population}{The lavaan model with population estimate values
-specified.}
+\item{data}{The dataset to be cleaned.}
 
-\item{model}{The lavaan model that will be tested in each simulation}
+\item{scenario_based_vars}{Character vector with base names or full names
+of variables to exclude from the dataset. Can also be a numeric vector with
+column indices to be removed.}
 
-\item{ksim}{How many simulations the function should perform}
+\item{missing_threshold}{Percentage threshold for missing data per observation
+(defaults to 60 percent).}
 
-\item{nobs}{How many observations to generate in each simulation}
+\item{full_names}{Logical value indicating whether \code{scenario_based_vars}
+are full names of the variables (default is FALSE).}
+
+\item{MCAR}{Logical value indicating whether to perform a MCAR test
+(defaults to FALSE).}
+
+\item{main_vars}{Character vector with base names of variables to include
+in the MCAR test. If NULL, all variables are included (default is NULL).}
 }
 \value{
-A table.
+A dataset with cleaned missing data.
 }
 \description{
-Compute Power Analysis For SEM Model Using Monte Carlo
-Simulation
-}
-\details{
-The function uses the simulate_data function from the lavaan
-package to perform a monte carlo simulation. The mean, std error, z value,
-p value and confidence intervals are then computed and reported in a table
-for each parameter.
+\code{clean_na_data} function is designed to handle missing data
+in a given dataset by excluding variables and observations based on the
+provided parameters. It provides a flexible and comprehensive approach to
+handling missing data by allowing to exclude variables based on patterns
+in their names and filter observations that have a percentage of missing
+data above a specified threshold. Additionally, it can perform a MCAR (Missing
+Completely At Random) test if requested.
 }
 \examples{
-library(lavaan)
-modpop <- '
-M ~ 0.40*X
-Y ~ 0.30*M
-'
-mod <- '
-M ~ X
-Y ~ M
-'
+\dontrun{
+# Generate some objects
+df <- data.frame(a = c(1, 2, NA, 4, 5),
+                 b = c("one", "two", "three", NA, "five"),
+                 c = c(NA, NA, 3, 4, 5))
 
-simulate_power(modpop, mod)
+# Clean the environment but keep lists and the object named 'a'
+clean_na_data(df, missing_threshold = 50, MCAR = TRUE)
+}
 }
 \references{
-Remember to add reference here
+Remember to add reference here.
 }

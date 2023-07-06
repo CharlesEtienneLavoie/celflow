@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# CEL
+# celflow
 
 <!-- badges: start -->
 
@@ -11,7 +11,11 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 status](https://www.r-pkg.org/badges/version/CEL)](https://CRAN.R-project.org/package=CEL)
 <!-- badges: end -->
 
-The goal of CEL is to …
+The goal of celflow is to provide a comprehensive set of tools and functions for optimizing the workflow of psychology research, specifically focusing on data preparation and cleaning. This package aims to streamline and simplify the process of preparing data for analysis, enabling researchers to follow good practices and adhere to established standards in the field.
+
+By leveraging the functionality of celflow, researchers can benefit from efficient and standardized methods for data manipulation, transformation, and quality control. The package offers a collection of functions that address common challenges encountered during the data preparation phase, such as handling missing values, managing outliers, recoding variables, and conducting data checks.
+
+With celflow, researchers can ensure the integrity and reliability of their data, reducing the potential for errors and enhancing the overall quality of their analyses. The package promotes good data management practices and facilitates the creation of reproducible research pipelines, contributing to the transparency and replicability of psychological research.
 
 ## Installation
 
@@ -19,7 +23,7 @@ You can install the development version of CEL like so:
 
 ``` r
 # If package `remotes` isn't already installed, install it with `install.packages("remotes")`
-remotes::install_github("CharlesEtienneLavoie/CEL")
+remotes::install_github("CharlesEtienneLavoie/celflow")
 ```
 
 ## Example
@@ -27,7 +31,7 @@ remotes::install_github("CharlesEtienneLavoie/CEL")
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-library(CEL)
+library(celflow)
 ## basic example code
 ```
 

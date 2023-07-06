@@ -1,4 +1,4 @@
-Package: CEL
+Package: celflow
 Title: Helpers For Good Practices In Data Preparation
 Version: 0.0.0.9000
 Authors@R: 
