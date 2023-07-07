@@ -25,7 +25,7 @@
 #' data.df <- compute_scale_means(data.df, scale_list, rename_reversed_items = TRUE)
 #' @importFrom stringr str_detect str_replace
 #' @importFrom dplyr mutate
-#' @importFrom tidyverse %>%
+#' @importFrom magrittr %>%
 
 
 compute_scale_means <- function(data, scale_list, rename_reversed_items = FALSE){
