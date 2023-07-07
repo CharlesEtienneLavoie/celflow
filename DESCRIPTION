@@ -8,6 +8,10 @@ Description: This package is meant to facilitate the process of preparing data f
 License: MIT + file LICENSE
 Imports: 
     lavaan,
+    naniar, 
+    remotes,
+    stats,
+    utils,
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
