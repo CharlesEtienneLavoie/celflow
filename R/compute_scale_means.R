@@ -8,12 +8,14 @@
 #'
 #' @details For each scale in the scale list, the function first identifies the
 #' matching columns in the data frame. Then it checks each item to see if it needs
-#' to be reverse scored, applies reverse scoring if necessary, and finally computes
-#' the mean for each scale. Messages are printed to indicate which new variables
-#' were computed and which variables were reverse scored.
+#' to be reverse scored, applies reverse scoring if the reverse_score argument is TRUE,
+#' and finally computes the mean for each scale. Messages are printed to indicate which
+#' new variables were computed, which variables were reverse scored, and which variables
+#' were renamed.
 #'
 #' @param data A data frame containing the scales and items.
 #' @param scale_list A character vector with the base names of the scales to be computed.
+#' @param reverse_score A logical indicating whether to apply reverse scoring. Default is TRUE.
 #' @param rename_reversed_items A logical indicating whether to rename reverse
 #' scored items by replacing "reverse" with "reversed". Default is FALSE.
 #'
@@ -22,13 +24,13 @@
 #' @export
 #' @examples
 #' # Assuming data.df is your data frame and scale_list is your list of scales
-#' data.df <- compute_scale_means(data.df, scale_list, rename_reversed_items = TRUE)
+#' data.df <- compute_scale_means(data.df, scale_list, reverse_score = TRUE, rename_reversed_items = TRUE)
 #' @importFrom stringr str_detect str_replace
 #' @importFrom dplyr mutate
 #' @importFrom magrittr %>%
 
 
-compute_scale_means <- function(data, scale_list, rename_reversed_items = FALSE){
+compute_scale_means <- function(data, scale_list, reverse_score = TRUE, rename_reversed_items = FALSE){
 
   new_vars <- 0 # Counter for new variables
 
@@ -39,27 +41,29 @@ compute_scale_means <- function(data, scale_list, rename_reversed_items = FALSE)
     # Check if there are any matching columns in the dataset
     if(length(item_cols) > 0){
 
-      # Check if reverse scoring is needed and apply it
-      for(col in item_cols){
-        if(str_detect(col, "reverse|Reverse")){
-          # Find max and min values for the variable
-          max_val <- max(data[[col]], na.rm = TRUE)
-          min_val <- min(data[[col]], na.rm = TRUE)
+      if(reverse_score) {
+        # Check if reverse scoring is needed and apply it
+        for(col in item_cols){
+          if(str_detect(col, "reverse|Reverse")){
+            # Find max and min values for the variable
+            max_val <- max(data[[col]], na.rm = TRUE)
+            min_val <- min(data[[col]], na.rm = TRUE)
 
-          # Reverse score the variable
-          data[[col]] <- max_val - as.numeric(data[[col]]) + min_val
+            # Reverse score the variable
+            data[[col]] <- max_val - as.numeric(data[[col]]) + min_val
 
-          # Print a message about reverse scoring
-          cat(paste0("Variable ", col, " has been reverse scored.\n"))
+            # Print a message about reverse scoring
+            cat(paste0("Variable ", col, " has been reverse scored.\n"))
 
-          # Rename reversed items if specified
-          if(rename_reversed_items){
-            new_name <- str_replace(col, "reverse|Reverse", "reversed")
-            colnames(data)[colnames(data) == col] <- new_name
-            cat(paste0("Variable ", col, " has been renamed to ", new_name, ".\n"))
+            # Rename reversed items if specified
+            if(rename_reversed_items){
+              new_name <- str_replace(col, "reverse|Reverse", "Reversed")
+              colnames(data)[colnames(data) == col] <- new_name
+              cat(paste0("Variable ", col, " has been renamed to ", new_name, ".\n"))
 
-            # Update item_cols with the new name
-            item_cols[item_cols == col] <- new_name
+              # Update item_cols with the new name
+              item_cols[item_cols == col] <- new_name
+            }
           }
         }
       }

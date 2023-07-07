@@ -4,12 +4,19 @@
 \alias{compute_scale_means}
 \title{Compute Mean Scores for Scales with Optional Reverse Scoring}
 \usage{
-compute_scale_means(data, scale_list, rename_reversed_items = FALSE)
+compute_scale_means(
+  data,
+  scale_list,
+  reverse_score = TRUE,
+  rename_reversed_items = FALSE
+)
 }
 \arguments{
 \item{data}{A data frame containing the scales and items.}
 
 \item{scale_list}{A character vector with the base names of the scales to be computed.}
+
+\item{reverse_score}{A logical indicating whether to apply reverse scoring. Default is TRUE.}
 
 \item{rename_reversed_items}{A logical indicating whether to rename reverse
 scored items by replacing "reverse" with "reversed". Default is FALSE.}
@@ -27,13 +34,14 @@ so before the mean is computed. An option allows renaming of reverse scored item
 \details{
 For each scale in the scale list, the function first identifies the
 matching columns in the data frame. Then it checks each item to see if it needs
-to be reverse scored, applies reverse scoring if necessary, and finally computes
-the mean for each scale. Messages are printed to indicate which new variables
-were computed and which variables were reverse scored.
+to be reverse scored, applies reverse scoring if the reverse_score argument is TRUE,
+and finally computes the mean for each scale. Messages are printed to indicate which
+new variables were computed, which variables were reverse scored, and which variables
+were renamed.
 }
 \examples{
 # Assuming data.df is your data frame and scale_list is your list of scales
-data.df <- compute_scale_means(data.df, scale_list, rename_reversed_items = TRUE)
+data.df <- compute_scale_means(data.df, scale_list, reverse_score = TRUE, rename_reversed_items = TRUE)
 }
 \references{
 (Optional)
