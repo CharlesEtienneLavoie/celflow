@@ -55,7 +55,7 @@ M ~ X
 Y ~ M
 '
 # Use the `simulate_power` function to perform power analysis
-# Assume we will perform 500 simulations and generate 200 observations in each simulation
-simulate_power(modpop, mod, ksim = 500, nobs = 200)
+# Assume we will perform 10 simulations and generate 5 observations in each simulation
+simulate_power(modpop, mod, ksim = 10, nobs = 5)
 
 ```
