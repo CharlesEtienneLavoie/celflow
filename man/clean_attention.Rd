@@ -13,22 +13,22 @@ clean_attention(
 )
 }
 \arguments{
-\item{data}{A dataset where attention check failures need to be identified and removed.}
+\item{data}{A dataframe where attention check failures need to be identified and removed.}
 
-\item{questions}{A vector of column names in the dataset that represent the questions
+\item{questions}{A character vector of column names in the dataframe that represent the questions
 used for attention checks.}
 
-\item{correct_answers}{A vector of the correct answers to the attention check
+\item{correct_answers}{A numeric vector of the correct answers to the attention check
 questions. Must be the same length as the \code{questions} vector.}
 
 \item{min_correct}{The minimum number of correct answers a participant must
-have to be retained in the dataset (default is 1).}
+have to be retained in the dataframe (default is 1).}
 
-\item{set_missing_to_zero}{A logical value to decide if missing responses should
+\item{set_missing_to_zero}{A logical value indicating whether missing responses should
 be treated as incorrect (default is FALSE).}
 }
 \value{
-A dataset where responses from participants who failed the attention
+A dataframe where responses from participants who failed the attention
 checks have been removed.
 }
 \description{
