@@ -23,8 +23,7 @@
 #' }
 #'
 #' @importFrom dplyr select where
-#' @importFrom doParallel
-#' @importFrom registerDoParallel
+#' @importFrom doParallel registerDoParallel
 #' @importFrom missForest missForest
 
 impute_data <- function(data, scenario_based_vars, cores = 4, seed = 100) {
