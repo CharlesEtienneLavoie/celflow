@@ -20,6 +20,9 @@
 #' (defaults to FALSE).
 #' @param main_vars Character vector with base names of variables to include
 #' in the MCAR test. If NULL, all variables are included (default is NULL).
+#' @param answers_only Logical value indicating whether to exclude non-answer variables
+#' (variables that do not contain a number nor 'demo' or 'Demo' in their name).
+#' If TRUE, these variables are treated the same way as scenario-based variables.
 #'
 #' @return A dataset with cleaned missing data.
 #' @references Remember to add reference here.
@@ -37,9 +40,17 @@
 
 
 
-clean_na <- function(data, scenario_based_vars = NULL, missing_threshold = 60, full_names = FALSE, MCAR = FALSE, main_vars = NULL) {
+clean_na <- function(data, scenario_based_vars = NULL, missing_threshold = 60,
+                     full_names = FALSE, MCAR = FALSE, main_vars = NULL, answers_only = FALSE) {
   # Make a copy of original data for later comparison
   data_original <- data
+
+  # If answers_only is TRUE, identify answer variables
+  if(answers_only) {
+    answer_vars <- names(data)[grepl("\\d|dem|demo", names(data), ignore.case = TRUE)]
+    data <- data[, names(data) %in% answer_vars]
+  }
+
   # Check if scenario_based_vars are provided
   if(!is.null(scenario_based_vars)){
     # If scenario_based_vars are column numbers
