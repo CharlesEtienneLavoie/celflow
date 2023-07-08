@@ -57,7 +57,7 @@ df <- data.frame(a = c(1, 2, NA, 4, 5),
                  c = c(NA, NA, 3, 4, 5))
 
 # Clean the environment but keep lists and the object named 'a'
-clean_na(df, missing_threshold = 50, MCAR = TRUE)
+clean_na(df, missing_threshold = 50, MCAR = TRUE, answers_only = FALSE)
 }
 }
 \references{
