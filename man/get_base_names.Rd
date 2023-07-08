@@ -6,31 +6,43 @@
 \usage{
 get_base_names(
   dataset,
-  underscore_count = 1,
+  underscore_count = NULL,
   keep_qualtrics_vars = FALSE,
   other_vars_removal = NULL,
-  use_numbers = FALSE
+  use_numbers = TRUE,
+  exclude_demo = TRUE,
+  exclude_check = TRUE,
+  keyword_exclude = NULL,
+  extract_demo = FALSE
 )
 }
 \arguments{
 \item{dataset}{The dataset from which variable names are extracted.}
 
-\item{underscore_count}{The number of underscores to consider when extracting base names (default is 1).}
+\item{underscore_count}{The number of underscores to consider when extracting base names (default is NULL).}
 
 \item{keep_qualtrics_vars}{Logical value indicating whether to keep Qualtrics variables (default is \code{FALSE}).}
 
 \item{other_vars_removal}{A character vector specifying additional variables to exclude from the extraction process (default is \code{NULL}).}
 
-\item{use_numbers}{Logical value indicating whether to append numbers to base names (default is \code{FALSE}).}
+\item{use_numbers}{Logical value indicating whether to append numbers to base names (default is \code{TRUE}).}
+
+\item{exclude_demo}{Logical value indicating whether to exclude variables containing 'dem' or 'demo' (default is \code{TRUE}).}
+
+\item{exclude_check}{Logical value indicating whether to exclude variables containing 'check' (default is \code{TRUE}).}
+
+\item{keyword_exclude}{A string indicating a keyword to exclude from variable names (default is \code{NULL}).}
+
+\item{extract_demo}{Logical value indicating whether to return a list of variables that contain 'dem' or 'demo' (default is \code{FALSE}).}
 }
 \value{
-A character vector containing the unique base names extracted from the dataset variable names.
+A character vector containing the unique base names extracted from the dataset variable names, or a list containing the base names and demo variable names if \code{extract_demo} is \code{TRUE}.
 }
 \description{
-This function extracts the base names from variable names in a dataset.
+This function extracts the base names from variable names in a dataset and optionally, demo variable names.
 }
 \details{
-The function takes a dataset as input and extracts the base names from the variable names. It allows for flexibility in handling variable names with underscores by specifying the number of underscores to consider. By default, the function removes Qualtrics variables commonly found in survey data, but this behavior can be modified with the \code{keep_qualtrics_vars} argument. Additional variables specified by the user can also be excluded. The function can also append numbers to base names if \code{use_numbers} is set to \code{TRUE}.
+The function takes a dataset as input and extracts the base names from the variable names. It allows for flexibility in handling variable names with underscores by specifying the number of underscores to consider. By default, the function removes Qualtrics variables commonly found in survey data, but this behavior can be modified with the \code{keep_qualtrics_vars} argument. Additional variables specified by the user can also be excluded. The function can also append numbers to base names if \code{use_numbers} is set to \code{TRUE}. Variables with 'dem' or 'demo' can be excluded and separately extracted if \code{extract_demo} is \code{TRUE}. Variables with 'check' or a user-defined keyword can also be excluded.
 }
 \examples{
 dataset <- data.frame(Age_1 = c(25, 30, 35),
