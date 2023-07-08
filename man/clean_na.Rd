@@ -10,7 +10,8 @@ clean_na(
   missing_threshold = 60,
   full_names = FALSE,
   MCAR = FALSE,
-  main_vars = NULL
+  main_vars = NULL,
+  answers_only = FALSE
 )
 }
 \arguments{
@@ -31,6 +32,10 @@ are full names of the variables (default is FALSE).}
 
 \item{main_vars}{Character vector with base names of variables to include
 in the MCAR test. If NULL, all variables are included (default is NULL).}
+
+\item{answers_only}{Logical value indicating whether to exclude non-answer variables
+(variables that do not contain a number nor 'demo' or 'Demo' in their name).
+If TRUE, these variables are treated the same way as scenario-based variables.}
 }
 \value{
 A dataset with cleaned missing data.
