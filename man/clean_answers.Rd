@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean_answers.R
 \name{clean_answers}
 \alias{clean_answers}
-\title{Clean and Filter Research Answers}
+\title{Clean and filter survey responses}
 \usage{
 clean_answers(
   data,
@@ -16,56 +16,38 @@ clean_answers(
 )
 }
 \arguments{
-\item{data}{A dataframe containing the data to be cleaned.}
+\item{data}{A data.frame containing the survey response data.}
 
-\item{apply_channel_filter}{Logical, whether to apply channel filtering. Default is TRUE.}
+\item{apply_channel_filter}{Logical; if TRUE, filter responses based on distribution channel.}
 
-\item{channel_keep}{A string specifying the channel to keep. Default is "anonymous".}
+\item{channel_keep}{The name of the distribution channel to keep. Responses from other channels are excluded.}
 
-\item{apply_progress_filter}{Logical, whether to apply progress filtering. Default is TRUE.}
+\item{apply_progress_filter}{Logical; if TRUE, filter responses based on progress threshold.}
 
-\item{progress_threshold}{A numeric value indicating the progress threshold. Default is 60.}
+\item{progress_threshold}{The minimum required progress for a response to be included in the cleaned data.}
 
-\item{apply_date_filter}{Logical, whether to apply date filtering. Default is TRUE.}
+\item{apply_date_filter}{Logical; if TRUE, filter responses based on response date.}
 
-\item{date_variable}{A string specifying the name of the date variable in the dataframe. Default is "StartDate".}
+\item{date_variable}{The name of the column in the data.frame containing response dates.}
 
-\item{date_filter}{A list specifying the date (year, month, day) for filtering. Default is the current date.}
+\item{date_filter}{A list specifying the earliest date (year, month, day) to include in the cleaned data.}
 }
 \value{
-A cleaned dataframe.
+A data.frame of the cleaned survey response data.
 }
 \description{
-The \code{clean_answers} function is designed to streamline the
-data cleaning process for psychology research. It allows for the filtering
-of data based on a specified date range, progress threshold, and channel.
-}
-\details{
-This function filters data based on three optional conditions:
-\enumerate{
-\item Filter out all rows that do not match a specified distribution channel
-(\code{channel_keep}).
-\item Filter out all rows that do not meet a certain progress threshold
-(\code{progress_threshold}).
-\item Filter out all rows that are before a specified date (\code{date_filter}).
-}
-
-The function then checks for the existence of the specified date variable
-(\code{date_variable}) and that it can be parsed into a date. If the check fails,
-an error is thrown.
+This function cleans and filters survey response data based on a variety of user-specified criteria. This includes
+filtering based on distribution channel, progress threshold, and response date.
 }
 \examples{
 \dontrun{
-cleaned_data <- clean_answers(mydata,
-                           apply_channel_filter = TRUE,
-                           channel_keep = "anonymous",
-                           apply_progress_filter = TRUE,
-                           progress_threshold = 75,
-                           apply_date_filter = TRUE,
-                           date_variable = "StartDate",
-                           date_filter = list(year = 2023, month = 7, day = 1))
+cleaned_data <- clean_answers(data = survey_data,
+                              apply_channel_filter = TRUE,
+                              channel_keep = "anonymous",
+                              apply_progress_filter = TRUE,
+                              progress_threshold = 60,
+                              apply_date_filter = TRUE,
+                              date_variable = "StartDate",
+                              date_filter = c(year = 2023, month = NULL, day = NULL))
 }
-}
-\references{
-Add any relevant references here.
 }
