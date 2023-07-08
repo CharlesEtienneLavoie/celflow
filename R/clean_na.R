@@ -39,9 +39,7 @@
 #' }
 
 
-
 clean_na <- function(data, scenario_based_vars = NULL, missing_threshold = 60,
-<<<<<<< HEAD
                      full_names = FALSE, MCAR = FALSE, main_vars = NULL, answers_only = FALSE) {
   # Make a copy of original data for later comparison
   data_original <- data
@@ -52,18 +50,6 @@ clean_na <- function(data, scenario_based_vars = NULL, missing_threshold = 60,
     data <- data[, names(data) %in% answer_vars]
   }
 
-=======
-                     full_names = FALSE, MCAR = FALSE, main_vars = NULL,
-                     answers_only = FALSE) {
-  # Make a copy of original data for later comparison
-  data_original <- data
-
-  if (answers_only) {
-    # Use regex to match variables that do not contain a number nor 'demo' or 'Demo'
-    non_answer_vars <- grep("^[^0-9]*_([^dD]*|d([^eE]*|e[^mM]*|em[^oO]*))$", names(data), value = TRUE)
-    scenario_based_vars <- unique(c(scenario_based_vars, non_answer_vars))
-  }
->>>>>>> 0e7c897436b801e5093ea7e7d8c88006d46b79e1
   # Check if scenario_based_vars are provided
   if(!is.null(scenario_based_vars)){
     # If scenario_based_vars are column numbers
@@ -80,6 +66,7 @@ clean_na <- function(data, scenario_based_vars = NULL, missing_threshold = 60,
       data <- data[, !(names(data) %in% scenario_based_vars)]
     }
   }
+
   # Visualize missing values
   print("Visualizing missing values in the dataset:")
   print(naniar::vis_miss(data))
@@ -124,5 +111,3 @@ clean_na <- function(data, scenario_based_vars = NULL, missing_threshold = 60,
 
   return(data_original)
 }
-
-
