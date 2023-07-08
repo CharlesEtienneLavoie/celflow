@@ -4,7 +4,13 @@
 \alias{impute_data}
 \title{Impute Data Using MissForest}
 \usage{
-impute_data(data, scenario_based_vars, cores = 4, seed = 100)
+impute_data(
+  data,
+  scenario_based_vars,
+  cores = 4,
+  seed = 100,
+  answers_only = FALSE
+)
 }
 \arguments{
 \item{data}{The dataset to be imputed.}
@@ -16,6 +22,9 @@ variables.}
 \item{cores}{The number of CPU cores to be used for parallel processing. Default is 4.}
 
 \item{seed}{The seed for reproducibility. Default is 100.}
+
+\item{answers_only}{Logical value indicating whether to only include variables with a number or
+the word 'demo'/'Demo' in their names for the imputation process. Default is FALSE.}
 }
 \value{
 The dataset with imputed values, maintaining the same column order as the original data.

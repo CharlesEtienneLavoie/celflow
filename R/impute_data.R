@@ -12,6 +12,8 @@
 #' variables.
 #' @param cores The number of CPU cores to be used for parallel processing. Default is 4.
 #' @param seed The seed for reproducibility. Default is 100.
+#' @param answers_only Logical value indicating whether to only include variables with a number or
+#' the word 'demo'/'Demo' in their names for the imputation process. Default is FALSE.
 #'
 #' @return The dataset with imputed values, maintaining the same column order as the original data.
 #' @references Add any relevant references here.
@@ -26,7 +28,13 @@
 #' @importFrom doParallel registerDoParallel
 #' @importFrom missForest missForest
 
-impute_data <- function(data, scenario_based_vars, cores = 4, seed = 100) {
+impute_data <- function(data, scenario_based_vars, cores = 4, seed = 100, answers_only = FALSE) {
+  # If answers_only is TRUE, identify answer variables
+  if(answers_only) {
+    answer_vars <- names(data)[grepl("\\d|demo|dem", names(data), ignore.case = TRUE)]
+    data <- data[, names(data) %in% answer_vars]
+  }
+
   # Select numeric variables for imputation
   numeric_vars_for_imputation <- data %>%
     select(where(is.numeric), -scenario_based_vars)
