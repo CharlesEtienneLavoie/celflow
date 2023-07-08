@@ -12,12 +12,12 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' list2string(c("var1", "var2", "var3"))
+#' get_string(c("var1", "var2", "var3"))
 #' }
 
 
 
-list2string <- function(var_list){
+get_string <- function(var_list){
   # convert the elements of the list into a string
   list_string <- paste(shQuote(var_list, type = "sh"), collapse = ", ")
 

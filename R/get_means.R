@@ -24,13 +24,13 @@
 #' @export
 #' @examples
 #' # Assuming data.df is your data frame and scale_list is your list of scales
-#' data.df <- compute_scale_means(data.df, scale_list, reverse_score = TRUE, rename_reversed_items = TRUE)
+#' data.df <- get_means(data.df, scale_list, reverse_score = TRUE, rename_reversed_items = TRUE)
 #' @importFrom stringr str_detect str_replace
 #' @importFrom dplyr mutate
 #' @importFrom magrittr %>%
 
 
-compute_scale_means <- function(data, scale_list, reverse_score = TRUE, rename_reversed_items = FALSE){
+get_means <- function(data, scale_list, reverse_score = TRUE, rename_reversed_items = FALSE){
 
   new_vars <- 0 # Counter for new variables
 

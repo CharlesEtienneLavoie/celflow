@@ -22,11 +22,11 @@
 #' Gender_2 = c("Female", "Male", "Female"),
 #' Income_2 = c(80000, 90000, 100000))
 #'
-#' extract_base_names(dataset, underscore_count = 1)
+#' get_base_names(dataset, underscore_count = 1)
 #'
 
 
-extract_base_names <- function(dataset, underscore_count = 1, keep_qualtrics_vars = FALSE, other_vars_removal = NULL, use_numbers = FALSE) {
+get_base_names <- function(dataset, underscore_count = 1, keep_qualtrics_vars = FALSE, other_vars_removal = NULL, use_numbers = FALSE) {
   var_names <- names(dataset)
 
   # Exclude Qualtrics vars if keep_qualtrics_vars is FALSE

@@ -11,12 +11,12 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' install_and_load_packages(c("ggplot2", "dplyr"))
+#' get_packages(c("ggplot2", "dplyr"))
 #' }
 
 
 
-install_and_load_packages <- function(packages) {
+get_packages <- function(packages) {
   for (package in packages) {
     if (!require(package, character.only = TRUE)) {
       install.packages(package)

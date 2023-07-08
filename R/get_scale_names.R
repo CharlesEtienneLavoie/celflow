@@ -19,13 +19,13 @@
 #' @export
 #' @examples
 #' # Assuming scales is your list of scales
-#' base_scales <- create_base_scale_names(scales, min_parts = 3, parts_to_keep = 2)
+#' base_scales <- get_scale_names(scales, min_parts = 3, parts_to_keep = 2)
 #' @importFrom stringr str_split
 
 
 
 
-create_base_scale_names <- function(scale_list, min_parts = 3, parts_to_keep = 2) {
+get_scale_names <- function(scale_list, min_parts = 3, parts_to_keep = 2) {
   # Filter out scales with less than min_parts parts
   scale_list <- scale_list[sapply(str_split(scale_list, "_"), length) >= min_parts]
 

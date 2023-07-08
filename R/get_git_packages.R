@@ -12,12 +12,12 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' install_and_load_git_packages(c("CharlesEtienneLavoie/CEL", 'rempsyc/rempsyc'))
+#' get_git_packages(c("CharlesEtienneLavoie/CEL", 'rempsyc/rempsyc'))
 #' }
 
 
 
-install_and_load_git_packages <- function(git_packages) {
+get_git_packages <- function(git_packages) {
   for (repo in git_packages) {
     package <- unlist(strsplit(repo, "/"))[2]
     if (!require(package, character.only = TRUE)) {

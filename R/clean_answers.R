@@ -1,6 +1,6 @@
-#' @title Clean and Filter Research Data
+#' @title Clean and Filter Research Answers
 #'
-#' @description The `clean_data` function is designed to streamline the
+#' @description The `clean_answers` function is designed to streamline the
 #' data cleaning process for psychology research. It allows for the filtering
 #' of data based on a specified date range, progress threshold, and channel.
 #'
@@ -29,7 +29,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' cleaned_data <- clean_data(mydata,
+#' cleaned_data <- clean_answers(mydata,
 #'                            apply_channel_filter = TRUE,
 #'                            channel_keep = "anonymous",
 #'                            apply_progress_filter = TRUE,
@@ -41,7 +41,7 @@
 
 
 
-clean_data <- function(data,
+clean_answers <- function(data,
                        apply_channel_filter = TRUE,
                        channel_keep = "anonymous",
                        apply_progress_filter = TRUE,

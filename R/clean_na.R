@@ -1,6 +1,6 @@
 #' @title Clean Dataset Based on Missing Data Threshold and MCAR Test
 #'
-#' @description `clean_na_data` function is designed to handle missing data
+#' @description `clean_na` function is designed to handle missing data
 #' in a given dataset by excluding variables and observations based on the
 #' provided parameters. It provides a flexible and comprehensive approach to
 #' handling missing data by allowing to exclude variables based on patterns
@@ -32,12 +32,12 @@
 #'                  c = c(NA, NA, 3, 4, 5))
 #'
 #' # Clean the environment but keep lists and the object named 'a'
-#' clean_na_data(df, missing_threshold = 50, MCAR = TRUE)
+#' clean_na(df, missing_threshold = 50, MCAR = TRUE)
 #' }
 
 
 
-clean_na_data <- function(data, scenario_based_vars = NULL, missing_threshold = 60, full_names = FALSE, MCAR = FALSE, main_vars = NULL) {
+clean_na <- function(data, scenario_based_vars = NULL, missing_threshold = 60, full_names = FALSE, MCAR = FALSE, main_vars = NULL) {
   # Make a copy of original data for later comparison
   data_original <- data
   # Check if scenario_based_vars are provided

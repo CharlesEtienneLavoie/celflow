@@ -1,6 +1,6 @@
 #' @title Clean Speed Outliers in a Dataset
 #'
-#' @description The `clean_speed_outliers` function identifies and removes
+#' @description The `clean_speed` function identifies and removes
 #' speed outliers from a given dataset based on the Median Absolute Deviation
 #' (MAD). The function can identify both "fast" and "slow" outliers, depending
 #' on the parameter settings. It prints the number of identified outliers,
@@ -24,12 +24,12 @@
 #' )
 #'
 #' # Remove speed outliers from the data
-#' clean_data <- clean_speed_outliers(df, duration_var = "duration", remove_slow = TRUE)
+#' clean_data <- clean_speed(df, duration_var = "duration", remove_slow = TRUE)
 #' }
 
 
 
-clean_speed_outliers <- function(data, duration_var, remove_slow = FALSE) {
+clean_speed <- function(data, duration_var, remove_slow = FALSE) {
   # Ensure that the variable exists in the data
   if (!(duration_var %in% names(data))) {
     stop(paste0("Variable '", duration_var, "' not found in the data"))
