@@ -8,7 +8,8 @@ get_means(
   data,
   scale_list,
   reverse_score = TRUE,
-  rename_reversed_items = FALSE
+  rename_reversed_items = FALSE,
+  order = 1
 )
 }
 \arguments{
@@ -20,6 +21,9 @@ get_means(
 
 \item{rename_reversed_items}{A logical indicating whether to rename reverse
 scored items by replacing "reverse" with "reversed". Default is FALSE.}
+
+\item{order}{An integer indicating the order of the scale. Use 1 for first order scales
+and 2 for second order scales. Default is 1.}
 }
 \value{
 A data frame with the computed mean scale scores added as new columns.
@@ -34,7 +38,7 @@ so before the mean is computed. An option allows renaming of reverse scored item
 \details{
 For each scale in the scale list, the function first identifies the
 matching columns in the data frame. Then it checks each item to see if it needs
-to be reverse scored, applies reverse scoring if the reverse_score argument is TRUE,
+to be reverse scored, applies reverse scoring if the \code{reverse_score} argument is TRUE,
 and finally computes the mean for each scale. Messages are printed to indicate which
 new variables were computed, which variables were reverse scored, and which variables
 were renamed.
@@ -42,7 +46,5 @@ were renamed.
 \examples{
 # Assuming data.df is your data frame and scale_list is your list of scales
 data.df <- get_means(data.df, scale_list, reverse_score = TRUE, rename_reversed_items = TRUE)
-}
-\references{
-(Optional)
+
 }
