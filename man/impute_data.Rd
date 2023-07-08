@@ -6,7 +6,7 @@
 \usage{
 impute_data(
   data,
-  scenario_based_vars,
+  scenario_based_vars = NULL,
   cores = 4,
   seed = 100,
   answers_only = FALSE
@@ -17,7 +17,7 @@ impute_data(
 
 \item{scenario_based_vars}{A character or numeric vector representing variable names
 or indices that should be excluded from the imputation process. These are the scenario-based
-variables.}
+variables. Defaults to NULL.}
 
 \item{cores}{The number of CPU cores to be used for parallel processing. Default is 4.}
 

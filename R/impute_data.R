@@ -9,7 +9,7 @@
 #' @param data The dataset to be imputed.
 #' @param scenario_based_vars A character or numeric vector representing variable names
 #' or indices that should be excluded from the imputation process. These are the scenario-based
-#' variables.
+#' variables. Defaults to NULL.
 #' @param cores The number of CPU cores to be used for parallel processing. Default is 4.
 #' @param seed The seed for reproducibility. Default is 100.
 #' @param answers_only Logical value indicating whether to only include variables with a number or
@@ -28,7 +28,7 @@
 #' @importFrom doParallel registerDoParallel
 #' @importFrom missForest missForest
 
-impute_data <- function(data, scenario_based_vars, cores = 4, seed = 100, answers_only = FALSE) {
+impute_data <- function(data, scenario_based_vars = NULL, cores = 4, seed = 100, answers_only = FALSE) {
   # If answers_only is TRUE, identify answer variables
   if(answers_only) {
     answer_vars <- names(data)[grepl("\\d|demo|dem", names(data), ignore.case = TRUE)]
@@ -36,12 +36,21 @@ impute_data <- function(data, scenario_based_vars, cores = 4, seed = 100, answer
   }
 
   # Select numeric variables for imputation
-  numeric_vars_for_imputation <- data %>%
-    select(where(is.numeric), -scenario_based_vars)
+  if (!is.null(scenario_based_vars)){
+    numeric_vars_for_imputation <- data %>%
+      select(where(is.numeric), -scenario_based_vars)
 
-  # Select non-numeric and scenario-based variables
-  non_imputed_vars <- data %>%
-    select(where(~ !is.numeric(.x)), scenario_based_vars)
+    # Select non-numeric and scenario-based variables
+    non_imputed_vars <- data %>%
+      select(where(~ !is.numeric(.x)), scenario_based_vars)
+  } else {
+    numeric_vars_for_imputation <- data %>%
+      select(where(is.numeric))
+
+    # Select non-numeric variables
+    non_imputed_vars <- data %>%
+      select(where(~ !is.numeric(.x)))
+  }
 
   # Set up parallel processing
   registerDoParallel(cores = cores)
