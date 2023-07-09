@@ -28,21 +28,25 @@
 #' @importFrom doParallel registerDoParallel
 #' @importFrom missForest missForest
 
+
 impute_data <- function(data, scenario_based_vars = NULL, cores = 4, seed = 100, answers_only = FALSE) {
+  # Original column names
+  orig_names <- names(data)
+
   # If answers_only is TRUE, identify answer variables
   if(answers_only) {
     answer_vars <- names(data)[grepl("\\d|demo|dem", names(data), ignore.case = TRUE)]
-    data <- data[, names(data) %in% answer_vars]
+    scenario_based_vars <- union(scenario_based_vars, names(data)[!names(data) %in% answer_vars])
   }
 
   # Select numeric variables for imputation
   if (!is.null(scenario_based_vars)){
     numeric_vars_for_imputation <- data %>%
-      select(where(is.numeric), -scenario_based_vars)
+      select(where(is.numeric), -any_of(scenario_based_vars))
 
     # Select non-numeric and scenario-based variables
     non_imputed_vars <- data %>%
-      select(where(~ !is.numeric(.x)), scenario_based_vars)
+      select(where(~ !is.numeric(.x)), any_of(scenario_based_vars))
   } else {
     numeric_vars_for_imputation <- data %>%
       select(where(is.numeric))
@@ -63,7 +67,7 @@ impute_data <- function(data, scenario_based_vars = NULL, cores = 4, seed = 100,
   combined_data <- cbind(non_imputed_vars, imputed_values$ximp)
 
   # Order the columns of the combined_data to match the original data
-  final_data <- combined_data[, names(data)]
+  final_data <- combined_data[, orig_names]
 
   return(final_data)
 }

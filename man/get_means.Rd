@@ -2,14 +2,15 @@
 % Please edit documentation in R/get_means.R
 \name{get_means}
 \alias{get_means}
-\title{Compute Mean Scores for Scales with Optional Reverse Scoring}
+\title{Compute Mean Scores for Scales with Optional Reverse Scoring and Clustering}
 \usage{
 get_means(
   data,
   scale_list,
   reverse_score = TRUE,
   rename_reversed_items = FALSE,
-  order = 1
+  order = 1,
+  cluster = NULL
 )
 }
 \arguments{
@@ -24,9 +25,13 @@ scored items by replacing "reverse" with "reversed". Default is FALSE.}
 
 \item{order}{An integer indicating the order of the scale. Use 1 for first order scales
 and 2 for second order scales. Default is 1.}
+
+\item{cluster}{A character representing the name of the column to be used for clustering.
+If provided, the function will compute cluster-level means for each new variable. Default is NULL.}
 }
 \value{
 A data frame with the computed mean scale scores added as new columns.
+If a cluster variable was provided, additional cluster-level mean variables are also added.
 }
 \description{
 This function computes mean scores for specified scales from a
@@ -34,17 +39,6 @@ given list. The scales are expected to be columns in the data frame starting
 with a base name in the scale list. If a scale item needs to be reverse
 scored (identified by "reverse" or "Reverse" in the item name), it is done
 so before the mean is computed. An option allows renaming of reverse scored items.
-}
-\details{
-For each scale in the scale list, the function first identifies the
-matching columns in the data frame. Then it checks each item to see if it needs
-to be reverse scored, applies reverse scoring if the \code{reverse_score} argument is TRUE,
-and finally computes the mean for each scale. Messages are printed to indicate which
-new variables were computed, which variables were reverse scored, and which variables
-were renamed.
-}
-\examples{
-# Assuming data.df is your data frame and scale_list is your list of scales
-data.df <- get_means(data.df, scale_list, reverse_score = TRUE, rename_reversed_items = TRUE)
-
+If a cluster variable is provided, the function also computes cluster-level means for
+each newly computed variable.
 }
