@@ -24,6 +24,7 @@
 #' @importFrom stringr str_detect str_replace
 #' @importFrom dplyr mutate
 #' @importFrom magrittr %>%
+#' @export
 #'
 
 get_means <- function(data, scale_list, reverse_score = TRUE, rename_reversed_items = FALSE, order = 1, cluster = NULL){
