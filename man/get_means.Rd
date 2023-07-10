@@ -16,29 +16,29 @@ get_means(
 \arguments{
 \item{data}{A data frame containing the scales and items.}
 
-\item{scale_list}{A character vector with the base names of the scales to be computed.}
+\item{scale_list}{A vector of characters representing the base names of the scales to compute.}
 
-\item{reverse_score}{A logical indicating whether to apply reverse scoring. Default is TRUE.}
+\item{reverse_score}{A logical indicating whether reverse scoring should be applied. Default is TRUE.}
 
-\item{rename_reversed_items}{A logical indicating whether to rename reverse
-scored items by replacing "reverse" with "reversed". Default is FALSE.}
+\item{rename_reversed_items}{A logical indicating whether to rename reverse scored items by
+replacing "reverse" with "reversed". Default is FALSE.}
 
 \item{order}{An integer indicating the order of the scale. Use 1 for first order scales
 and 2 for second order scales. Default is 1.}
 
-\item{cluster}{A character representing the name of the column to be used for clustering.
-If provided, the function will compute cluster-level means for each new variable. Default is NULL.}
+\item{cluster}{A character string representing the column name used for clustering. If provided,
+the function computes cluster-level means for each new variable. Default is NULL.}
 }
 \value{
-A data frame with the computed mean scale scores added as new columns.
-If a cluster variable was provided, additional cluster-level mean variables are also added.
+A data frame with new columns of computed mean scale scores. If a cluster variable
+was provided, additional columns representing cluster-level mean variables are added.
 }
 \description{
-This function computes mean scores for specified scales from a
-given list. The scales are expected to be columns in the data frame starting
-with a base name in the scale list. If a scale item needs to be reverse
-scored (identified by "reverse" or "Reverse" in the item name), it is done
-so before the mean is computed. An option allows renaming of reverse scored items.
-If a cluster variable is provided, the function also computes cluster-level means for
-each newly computed variable.
+This function computes mean scores for specified scales derived from a given
+data frame. The scales are anticipated to be represented as columns in the data frame that
+begin with a base name specified in the scale list. Items that require reverse scoring
+(identified by "reverse" or "Reverse" in the item name) are automatically reversed before
+calculating the mean. An option is provided to rename reversed scored items. If a clustering
+variable is specified, the function also computes cluster-level means for each newly computed
+variable.
 }
