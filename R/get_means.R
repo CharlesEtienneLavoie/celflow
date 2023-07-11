@@ -49,10 +49,8 @@ get_means <- function(data, scale_list, reverse_score = TRUE, rename_reversed_it
 
     # Identify constant chunks
     constant_chunks <- sapply(str_split(scale_list, "_"), function(parts) parts[1])
-
     # Exclude constant chunks from the output
     x <- x[!x %in% constant_chunks]
-
     unique(x)
   }
 
@@ -65,49 +63,42 @@ get_means <- function(data, scale_list, reverse_score = TRUE, rename_reversed_it
   new_vars <- 0
   new_cluster_vars <- 0
 
-  # Loop over each scale name in the provided list
   for(scale_name in scale_list){
-    # Generate a regular expression pattern based on the scale name and use this to match column names in the dataset
     item_cols <- grep(paste0("^", scale_name, "_.*[0-9](_[rR]everse|_reversed)?$"), names(data), value = TRUE)
     if(length(item_cols) > 0){
       if(reverse_score) {
         for(col in item_cols){
           if(str_detect(col, "_[rR]everse$")){
-            # Reverse score the values in this column
             max_val <- max(data[[col]], na.rm = TRUE)
             min_val <- min(data[[col]], na.rm = TRUE)
             data[[col]] <- max_val - as.numeric(data[[col]]) + min_val
-            cat("\nVariable \033[1m", col, "\033[0m has been reverse scored.\n")
+            cat(col, " has been reverse scored.\n\n")
             if(rename_reversed_items){
-              # Rename the column
               new_name <- str_replace(col, "_[rR]everse$", "_reversed")
               colnames(data)[colnames(data) == col] <- new_name
-              cat("\nVariable \033[1m", col, "\033[0m has been renamed to \033[1m", new_name, "\033[0m.\n")
+              cat(col, " has been renamed to ", new_name, ".\n\n")
               item_cols[item_cols == col] <- new_name
             }
           }
         }
       }
-      # Compute a new variable in the dataset
       data <- data %>%
         mutate(!!scale_name := rowMeans(.[, item_cols, drop = FALSE], na.rm = TRUE))
-      cat("\nNew variable \033[1m", scale_name, "\033[0m was computed from: ", paste(item_cols, collapse = ", "), "\n")
+      cat(scale_name, " was computed from: ", paste(item_cols, collapse = ", "), ".\n\n")
       new_vars <- new_vars + 1
 
       if (!is.null(cluster)) {
-        # Compute cluster-level means for the new variable
         cluster_means <- aggregate(data[[scale_name]], list(data[[cluster]]), mean, na.rm = TRUE)
         colnames(cluster_means) <- c(cluster, paste0(scale_name, "_between"))
         data <- merge(data, cluster_means, by = cluster)
-        cat("\nNew variable \033[1m", paste0(scale_name, "_between"), "\033[0m was computed from cluster-level means of \033[1m", scale_name, "\033[0m\n")
+        cat(paste0(scale_name, "_between"), " was computed from cluster-level means of ", scale_name, ".\n\n")
         new_cluster_vars <- new_cluster_vars + 1
       }
     } else if(order != 2 || (order == 2 && any(str_detect(scale_name, second_last_non_numeric_chunks)))){
-      # Only print a message if order != 2, or if order == 2 but the scale_name still contains any of the second last non-numeric chunks
-      message("\nNo variables found for scale: \033[1m", scale_name, "\033[0m\n")
+      message("No variables found for scale: ", scale_name, "\n\n")
     }
   }
-  cat("\n\033[1m", new_vars, "\033[0m new variables were computed.\n")
-  cat("\n\033[1m", new_cluster_vars, "\033[0m new cluster-level mean variables were computed.\n")
+  cat(new_vars, " new variables were computed.\n\n")
+  cat(new_cluster_vars, " new cluster-level mean variables were computed.\n\n")
   return(data)
 }
