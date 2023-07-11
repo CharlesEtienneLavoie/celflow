@@ -31,7 +31,7 @@
 #'
 #' # Apply the mean function to the subsets of variables
 #' results <- root_apply(df,
-#'                       root_names = c("daily_sat_aut", "daily_fru_aut", "daily_sat_rel"),
+#'                       root_names = c("daily_sat_aut_reversed", "daily_fru_aut", "daily_sat_rel"),
 #'                       fun = mean)
 #' }
 #'
@@ -42,7 +42,7 @@ root_apply <- function(dataset, root_names, fun, ...) {
   results <- list()
 
   for (root in root_names) {
-    pattern <- paste0("^", root, "_\\d+$")
+    pattern <- paste0("^", root, "_\\d+.*")
     matching_names <- grep(pattern, names(dataset), value = TRUE)
 
     if (length(matching_names) > 0) {
