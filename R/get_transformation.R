@@ -31,7 +31,7 @@
 #'
 #' @export
 
-transform_and_update <- function(data, var_list, seed = 100) {
+get_transformation <- function(data, var_list, seed = 100) {
   # First function to apply bestNormalize and print results
   predict_bestNormalize <- function(var_name, df) {
     var <- df[[var_name]]
