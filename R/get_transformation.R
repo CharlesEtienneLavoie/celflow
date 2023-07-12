@@ -38,7 +38,6 @@ get_transformation <- function(data, var_list, seed = 100) {
     x <- bestNormalize(var, standardize = FALSE, allow_orderNorm = FALSE)
     print(var_name)
     print(x$chosen_transform)
-    print(class(x$chosen_transform))
     cat("\n")
     return(x)
   }
@@ -48,7 +47,7 @@ get_transformation <- function(data, var_list, seed = 100) {
   new_data <- purrr::map_dfc(var_list, ~ {
     x = predict_bestNormalize(.x, data)
     if ("no_transform" %in% class(x$chosen_transform)) {
-      tibble(!!.x := x$x)
+      NULL  # skip this variable if no transformation is applied
     } else {
       tibble(!!paste0(.x, ".t") := predict(x))
     }
@@ -57,16 +56,9 @@ get_transformation <- function(data, var_list, seed = 100) {
   # Get the variable names from new_data that contain '.t'
   var_list_t <- names(new_data)[grepl(".t$", names(new_data))]
 
-  # Select only '.t' variables from new_data
-  new_data_t <- new_data[var_list_t]
-
-  # Bind these '.t' variables to the original dataset
-  data <- bind_cols(data, new_data_t)
-
   # Replace suffix for the variables in var_list based on the existence of '.t' version
-  var_list_t <- ifelse(var_list %in% sub(".t$", "", var_list_t), paste0(var_list, ".t"), var_list)
+  var_list_t_all <- ifelse(var_list %in% sub(".t$", "", var_list_t), paste0(var_list, ".t"), var_list)
 
-  # Return the updated dataframe and the new variable list
-  list(data = data, var_list = var_list_t)
+  # Return the transformed data, the new variable list and the list of transformed variables
+  list(data_transformed = new_data, var_list_all = var_list_t_all, var_list_transformed = var_list_t)
 }
-
