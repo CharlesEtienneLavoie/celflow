@@ -12,6 +12,12 @@ Imports:
     remotes,
     stats,
     utils,
+    doParallel,
+    bestNormalize,
+    stringr,
+    missForest,
+    magrittr,
+    dplyr,
     doParallel
 Suggests: 
     testthat (>= 3.0.0)
