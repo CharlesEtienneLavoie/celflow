@@ -61,4 +61,3 @@ get_processed_list <- function(var_list, include_t = TRUE) {
 
   return(var_list_processed$var)
 }
-
