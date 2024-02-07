@@ -14,7 +14,6 @@ usethis::use_github()
 
 usethis::use_git_remote("origin", url = 'https://github.com/CharlesEtienneLavoie/celflow.git', overwrite = TRUE)
 
-
-
 ?usethis
 
+#test
