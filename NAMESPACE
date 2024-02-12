@@ -2,6 +2,7 @@
 
 export(clean_answers)
 export(clean_attention)
+export(clean_ending)
 export(clean_env)
 export(clean_na)
 export(clean_speed)
