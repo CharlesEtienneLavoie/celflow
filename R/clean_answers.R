@@ -60,8 +60,6 @@ clean_answers <- function(data,
     original_nrows <- nrow(data)
     data <- data %>%
       filter(DistributionChannel == channel_keep)
-    # Remove DistributionChannel column
-    data$DistributionChannel <- NULL
     cat("\nChannel Filter:", original_nrows - nrow(data), "observations were excluded.\n")
   }
 
