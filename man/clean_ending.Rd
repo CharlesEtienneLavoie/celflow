@@ -4,27 +4,32 @@
 \alias{clean_ending}
 \title{Filter Dataset Based on Ending Status}
 \usage{
-clean_ending(data, keep_na = TRUE)
+clean_ending(data, ending_value = "Normal", keep_na = TRUE)
 }
 \arguments{
 \item{data}{The dataset to be filtered.}
 
+\item{ending_value}{The value of the "Ending" variable to filter the dataset by.
+The default value is "Normal", indicating that by default, observations with
+an Ending of "Normal" or NA (if keep_na is TRUE) are kept.}
+
 \item{keep_na}{Logical value indicating whether to keep observations where
-the Ending is NA. If TRUE, observations where Ending is NA or "Normal" are kept.
-If FALSE, only observations where Ending is "Normal" are kept (default is TRUE).}
+the Ending is NA alongside the specified \code{ending_value}. If TRUE, observations
+where Ending is NA or matches the \code{ending_value} are kept. If FALSE, only
+observations where Ending matches the \code{ending_value} are kept. The default is TRUE.}
 }
 \value{
 A filtered dataset based on the specified criteria for the Ending status.
 Additionally, it reports the number of observations before and after filtering,
-as well as the number of observations filtered out.
+as well as the number of observations filtered out based on the ending scenario filter.
 }
 \description{
 \code{clean_ending} function is designed to filter a dataset
 based on the status of the "Ending" variable. It allows users to either
-include or exclude observations where the Ending is NA or explicitly marked
-as "Normal". This function provides a simple yet effective method for focusing
-analyses on subsets of data that meet specific criteria related to their
-conclusion status.
+include or exclude observations where the Ending is NA or matches a specific
+value, which by default is "Normal". This function provides a simple yet
+effective method for focusing analyses on subsets of data that meet specific
+criteria related to their conclusion status.
 }
 \examples{
 \dontrun{
@@ -38,6 +43,12 @@ filtered_df <- clean_ending(df, keep_na = TRUE)
 
 # Filter the dataset to keep only "Normal" endings, excluding NAs
 filtered_df_no_na <- clean_ending(df, keep_na = FALSE)
+
+# Filter the dataset for a different ending value, say "Critical", including NAs
+filtered_df_critical <- clean_ending(df, ending_value = "Critical", keep_na = TRUE)
+
+# Filter the dataset for a different ending value, say "Abnormal", excluding NAs
+filtered_df_abnormal <- clean_ending(df, ending_value = "Abnormal", keep_na = FALSE)
 }
 }
 \references{
