@@ -17,3 +17,14 @@ usethis::use_git_remote("origin", url = 'https://github.com/CharlesEtienneLavoie
 ?usethis
 
 #test
+
+
+use_github_links()
+
+
+usethis::gh_token_help()
+
+create_github_token()
+
+gitcreds::gitcreds_set()
+
